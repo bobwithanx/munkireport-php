@@ -231,6 +231,7 @@ var showFilterModal = function(e){
 			// Update all
 			$(document).trigger('appUpdate');
 		})
+        enableDisableCheckAll();
     };
     
     var updateArchived = function() {
@@ -261,6 +262,19 @@ var showFilterModal = function(e){
 			// Update all
 			$(document).trigger('appUpdate');
 		})
+    }
+
+    // Enable or disable depending on state of filters
+    var enableDisableCheckAll = function(){
+       var all = $("div.mgroups :checkbox").length;
+       var checked = $("div.mgroups :checkbox:checked").length;
+    
+       if (all == checked) {
+           $("div.all_mgroups :checkbox").prop("checked", true);
+       }
+       else {
+           $("div.all_mgroups :checkbox").prop("checked", false);
+       }
     }
 
     // Enable or disable depending on state of archived
@@ -339,7 +353,7 @@ var showFilterModal = function(e){
         // Add check/uncheck all
         modal_body.append($('<b>')
                     .text(i18n.t("business_unit.machine_groups")))
-            .append($('<div class="checkbox">')
+                .append($('<div class="checkbox all_mgroups">')
                 .append($('<label>')
                     .append($('<input>')
                         .change(updateAll)
@@ -363,6 +377,7 @@ var showFilterModal = function(e){
 							.append(obj.name || 'No Name')))
 			}
 		});
+        enableDisableCheckAll();
 
         $('#myModal button.ok').text(i18n.t("dialog.close"));
 
